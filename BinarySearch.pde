@@ -23,23 +23,55 @@ private Item[] store =
 };                             
 public int linearSearch(int catNumToFind)
 {
-  //complete this method
+  for(int a = 0; a < store.length; a ++){
+    if(store[a].getCatNum()==catNumToFind){
+      return store[a].getInventory();
+    }
+  }
   return -1;
 }
 public int recursiveLinearSearch(int catNumToFind, int startIndex)
 {
-  //complete this method
-  return -1;
+  if(store[startIndex].getCatNum() == catNumToFind){
+    return store[startIndex].getInventory();
+  }else if(startIndex < store.length - 1){
+    return recursiveLinearSearch(catNumToFind, startIndex + 1);
+  }
+    return -1;
 }
 public int binarySearch(int catNumToFind)
 {
-  //complete this method    
-  return -1;
+  int low = 0;
+  int high = store.length - 1;
+  while(low < high){
+    int index = (low + high)/2;
+    if(store[index].getCatNum() == catNumToFind){
+      return store[index].getInventory();
+    }else if(store[index].getCatNum() > catNumToFind){
+      high = index;
+    }else{
+      if((index + high)/2 == index){
+        return store[index + 1].getCatNum() == catNumToFind? store[index + 1].getInventory(): -1;
+      }
+      low = index;
+    }
+  }
+  return store[0].getCatNum() == catNumToFind? store[0].getInventory() : -1;
 }
-public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
+public int recursiveBinarySearch(int catNumToFind, int low, int high)
 {
-  //complete this method    
-  return -1;
+  int checkingIndex = (low + high)/2;
+  if(store[checkingIndex].getCatNum() == catNumToFind){
+    return store[checkingIndex].getInventory();
+  }else if(store.length == 1){
+    return -1;
+  }else if(checkingIndex == low && low + 1 < store.length){
+    return store[checkingIndex + 1].getCatNum() == catNumToFind? store[checkingIndex + 1].getInventory() : -1;
+  }else if(store[checkingIndex].getCatNum() > catNumToFind){
+    return recursiveBinarySearch(catNumToFind, low, checkingIndex);
+  }else{
+    return recursiveBinarySearch(catNumToFind, checkingIndex, high);
+  }
 }
 public void setup()
 {
